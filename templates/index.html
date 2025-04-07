@@ -1,141 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCFD</title>
-
+    <title>Credit Card Fraud Detection</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
     <style>
-        .feedback-form-container {
-            max-width: 400px; 
-            margin: 0 auto; 
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 5px solid #3b82f6;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .content {
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+        .content.visible {
+            opacity: 1;
         }
     </style>
 </head>
+<body class="bg-white">
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
 
-<body class="bg-gray-100">
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">Credit Card Fraud Detection</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#team">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="h-96 flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 text-white">
-        <div class="text-center">
-            <h1 class="text-4xl font-bold mb-4">Welcome to Your Company</h1>
-            <p class="text-lg">We provide innovative solutions</p>
-            <p class="text-lg">Register now to get started!</p>
-            <a href="/register" class="text-lg text-white underline mt-4 inline-block bg-gray-800 py-2 px-6 rounded-lg hover:bg-gray-700">Register</a>
-        </div>
-    </section>
-
-    <!-- Card Section -->
-    <section id="team" class="py-16 bg-gray-200">
-        <div class="container">
-            <h2 class="text-3xl font-bold mb-8 text-center">Our Team</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 justify-center">
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-                    <img class="w-full h-64 object-cover object-center" src="https://via.placeholder.com/400x400" alt="Team Member">
-                    <div class="p-6">
-                        <h2 class="font-semibold text-xl">John Doe</h2>
-                        <p class="text-gray-500">CEO</p>
-                        <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec odio in est viverra lacinia.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-                    <img class="w-full h-64 object-cover object-center" src="https://via.placeholder.com/400x400" alt="Team Member">
-                    <div class="p-6">
-                        <h2 class="font-semibold text-xl">Jane Doe</h2>
-                        <p class="text-gray-500">CTO</p>
-                        <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec odio in est viverra lacinia.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg overflow-hidden shadow-lg">
-                    <img class="w-full h-64 object-cover object-center" src="https://via.placeholder.com/400x400" alt="Team Member">
-                    <div class="p-6">
-                        <h2 class="font-semibold text-xl">Jane Doe</h2>
-                        <p class="text-gray-500">CTO</p>
-                        <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec odio in est viverra lacinia.</p>
+    <!-- Main Content -->
+    <div class="content" id="content">
+        <!-- Navbar -->
+        <nav class="bg-white shadow-lg fixed w-full z-50">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center py-2">
+                    <a class="text-xl font-bold text-blue-600" href="#">Credit Card Fraud Detection</a>
+                    <div class="hidden md:flex items-center space-x-4">
+                        <a href="#home" class="text-gray-600 hover:text-blue-600 transition duration-300">Home</a>
+                        <a href="/login" class="text-gray-600 hover:text-blue-600 transition duration-300">Login</a>
+                        <a href="/register" class="bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition duration-300">Register</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </nav>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-12">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h3 class="mb-4">Feedback Form</h3>
+        <!-- Hero Section -->
+        <section id="home" class="pt-24 pb-12 bg-gradient-to-r from-blue-50 to-white">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Secure Your Transactions</h1>
+                    <p class="text-xl text-gray-600 mb-8">Advanced fraud detection system to protect your credit card transactions</p>
+                    <div class="space-x-4">
+                        <a href="/register" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-300 inline-block">Get Started</a>
+                        <a href="/login" class="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition duration-300 inline-block">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Why Choose Our Solution</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-6 bg-blue-50 rounded-lg">
+                        <div class="text-blue-600 text-3xl mb-4"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Real-time Protection</h3>
+                        <p class="text-gray-600">Instant fraud detection using advanced machine learning algorithms to protect your transactions 24/7.</p>
+                    </div>
+                    <div class="p-6 bg-blue-50 rounded-lg">
+                        <div class="text-blue-600 text-3xl mb-4"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Advanced Analytics</h3>
+                        <p class="text-gray-600">Detailed transaction analysis and reporting to help you understand your spending patterns.</p>
+                    </div>
+                    <div class="p-6 bg-blue-50 rounded-lg">
+                        <div class="text-blue-600 text-3xl mb-4"><i class="fas fa-bell"></i></div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Instant Alerts</h3>
+                        <p class="text-gray-600">Get immediate notifications about suspicious activities on your credit card.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="py-16 bg-gradient-to-r from-white to-blue-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">How It Works</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl mx-auto mb-4">1</div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Connect Card</h3>
+                        <p class="text-gray-600">Securely link your credit card to our system</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl mx-auto mb-4">2</div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Monitor Activity</h3>
+                        <p class="text-gray-600">We analyze your transactions in real-time</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl mx-auto mb-4">3</div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Detect Fraud</h3>
+                        <p class="text-gray-600">AI algorithms identify suspicious patterns</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-xl mx-auto mb-4">4</div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Alert You</h3>
+                        <p class="text-gray-600">Receive instant notifications of threats</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Our Impact</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div class="text-4xl font-bold text-blue-600 mb-2">99.9%</div>
+                        <p class="text-gray-600">Accuracy Rate</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-blue-600 mb-2">24/7</div>
+                        <p class="text-gray-600">Monitoring</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-blue-600 mb-2">1M+</div>
+                        <p class="text-gray-600">Protected Cards</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-blue-600 mb-2">$0</div>
+                        <p class="text-gray-600">Fraud Losses</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t border-gray-200 py-12">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Feedback Form -->
-                    <div class="feedback-form-container">
-                        <form>
-                            <div class="mb-3">
-                                <label for="feedbackName" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="feedbackName" placeholder="Enter your name">
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Send us Feedback</h3>
+                        <form class="space-y-3">
+                            <div>
+                                <input type="email" placeholder="Your Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                             </div>
-                            <div class="mb-3">
-                                <label for="feedbackEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="feedbackEmail" placeholder="Enter your email">
+                            <div>
+                                <textarea placeholder="Your Message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
                             </div>
-                            <div class="mb-3">
-                                <label for="feedbackMessage" class="form-label">Message</label>
-                                <textarea class="form-control" id="feedbackMessage" rows="3" placeholder="Enter your message"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">Send Feedback</button>
                         </form>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <h3 class="mb-4">Sitemap</h3>
-                        <!-- Sitemap Links -->
-                        <ul class="list-unstyled">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Contact Us</a></li>
+
+                    <!-- Site Map -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#home" class="text-gray-600 hover:text-blue-600 transition duration-300">Home</a></li>
+                            <li><a href="/login" class="text-gray-600 hover:text-blue-600 transition duration-300">Login</a></li>
+                            <li><a href="/register" class="text-gray-600 hover:text-blue-600 transition duration-300">Register</a></li>
+                            <li><a href="/dashboard" class="text-gray-600 hover:text-blue-600 transition duration-300">Dashboard</a></li>
                         </ul>
                     </div>
-                <div class="col-md-3">
-                    <h3 class="mb-4">Developer Details</h3>
-                    <!-- Developer Details -->
-                    <p>Name: Kalpesh Vala</p>
-                    <p>Email: kalpeshvala78@gmail.com</p>
+
+                    <!-- Contact Info -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Contact Us</h3>
+                        <div class="space-y-2 text-gray-600">
+                            <p>Email: support@ccfraud.com</p>
+                            <p>Phone: +1 (555) 123-4567</p>
+                            <div class="flex space-x-4 mt-4">
+                                <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300"><i class="fab fa-facebook"></i></a>
+                                <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300"><i class="fab fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-        </div>
-        <hr class="mt-5 mb-4">
-        <!-- Copyright -->
-        <p class="text-center">&copy; 2024 Your Company Name. All Rights Reserved.</p>
+
+                <!-- Copyright -->
+                <div class="text-center text-gray-600 mt-8 pt-8 border-t border-gray-200">
+                    <p>&copy; 2024 Credit Card Fraud Detection. All Rights Reserved.</p>
+                    <p class="mt-2">Developed by Kalpesh Vala</p>
+                </div>
+            </div>
+        </footer>
     </div>
-</footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('content').classList.add('visible');
+            }, 3000);
+        });
+    </script>
 </body>
-
 </html>

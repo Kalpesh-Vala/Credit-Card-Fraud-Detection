@@ -10,15 +10,22 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = b'_5#y2L"F4Q8zoka]fds/'
 
 # Define the directory where uploaded files will be stored
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-client = MongoClient('mongodb://localhost:27017/')
-db = client['user_database']
-collection = db['users']
+try:
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client['user_database_ccfd']
+    collection = db['users']
+    # Test the connection
+    client.admin.command('ping')
+    print("Successfully connected to MongoDB Atlas!")
+except Exception as e:
+    print(f"Error connecting to MongoDB Atlas: {e}")
+    raise
 
 
 @app.route('/')

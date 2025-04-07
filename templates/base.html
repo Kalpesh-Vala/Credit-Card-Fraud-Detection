@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CCFD{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #000;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading .loader {
+            display: block;
+        }
+
+        .loading .content {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .btn-primary {
+            @apply bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-colors;
+        }
+
+        .btn-secondary {
+            @apply bg-white text-black border-2 border-black px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors;
+        }
+
+        .input-field {
+            @apply w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-black focus:outline-none transition-colors;
+        }
+
+        .card {
+            @apply bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow;
+        }
+
+        .nav-link {
+            @apply text-gray-300 hover:text-white transition-colors;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-black text-white shadow-lg fixed w-full top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="/" class="text-xl font-bold">Credit Card Fraud Detection</a>
+                <div class="hidden md:flex space-x-6">
+                    {% if session.get('username') %}
+                        <a href="/dashboard" class="nav-link">Dashboard</a>
+                        <a href="/admin" class="nav-link">Administration</a>
+                        <div class="relative group">
+                            <button class="nav-link flex items-center">
+                                {{ session.username }}
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 hidden group-hover:block">
+                                <a href="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                                <a href="/logout" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="/login" class="nav-link">Login</a>
+                        <a href="/register" class="nav-link">Register</a>
+                    {% endif %}
+                </div>
+                <button class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pt-20 pb-12">
+        <div class="loader"></div>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-8 mt-auto">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Credit Card Fraud Detection. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Loading state management
+        function showLoader() {
+            document.body.classList.add('loading');
+        }
+
+        function hideLoader() {
+            document.body.classList.remove('loading');
+        }
+
+        // Add loading state to all form submissions
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    showLoader();
+                });
+            });
+
+            // Add loading state to navigation
+            const links = document.querySelectorAll('a:not([target="_blank"])');
+            links.forEach(link => {
+                link.addEventListener('click', function() {
+                    showLoader();
+                });
+            });
+        });
+
+        // Mobile menu toggle
+        const menuButton = document.querySelector('button.md:hidden');
+        const mobileMenu = document.querySelector('.md\\:flex');
+        
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('block');
+        });
+    </script>
+</body>
+</html>
