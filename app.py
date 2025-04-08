@@ -7,18 +7,25 @@ from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
 
-app.secret_key = b'_5#y2L"F4Q8zoka]fds/'
+# Use environment variables for configuration
+app.secret_key = os.getenv('SECRET_KEY')
+MONGODB_URI = os.getenv('MONGODB_URI')
 
 # Define the directory where uploaded files will be stored
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 try:
-    client = MongoClient('mongodb://localhost:27017/')
-    db = client['user_database_ccfd']
+    client = MongoClient(MONGODB_URI)
+    db = client['ccfd']
     collection = db['users']
     # Test the connection
     client.admin.command('ping')
